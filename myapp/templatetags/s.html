@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{# 修改时间#}
+                {% for foo in p_time %}
+                <div class="dkuang clearfix deng">
+						<p class="one fl" style="display: none">修改时间</p>
+
+
+                            <div class="dkuang" style="border: none">
+						<p class="one" style="color:#A10000 ;font-size: 18px">标题：{{ foo.title }}</p>
+						<div class="word clearfix">
+							<ul class="fl clearfix">
+
+								<li>{{ foo.tag }}</li>
+								<li>{{ foo.classfy }}</li>
+								<li>{{ foo.source }}</li>
+							</ul>
+							<p class="fr"><span style="margin-right: 5px">
+                                {% if foo.vip %}
+                                    VIP
+                                {% else %}
+                                    非VIP
+                                {% endif %}
+                            </span></p>
+						</div>
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img style="float: left;margin-left: -3px; margin-top: -12px; margin-bottom: -12px;width: 135px;height: 95px" src="/static/media/{{ foo.img }}"/></a>
+
+                            <div style="float: left;margin-left: 75px;width: 400px;height: 65px;">
+                                <ul class="fl clearfix">
+								<li style="color: #757575">创建时间：{{ foo.pub_time }}</li>
+                                    <br>
+								<li style="color: #757575">修改时间：{{ foo.modify_time }}</li>
+
+							</ul>
+                            </div>
+                            <form action="show_alter_post/" method="get" id="_form" >
+                                <input type="text" style="display: none" name="post_id" rel="{{ foo.id }}" value="{{ foo.id }}" placeholder="{{ foo.id }}">
+                                <p class="fr" >
+                                    <a  href="#" onclick="document.getElementById('_form').submit();">修改文章</a>
+                                    <a href="#" class="simi" rel="{{ foo.id }}">设为私密</a>
+                                </p>
+                            </form>
+
+
+						</div>
+					</div>
+
+
+
+
+
+					</div>
+                {% endfor %}
+
+                {#私密文章#}
+                {% for foo in p_private %}
+                <div class="dkuang deng">
+						<p class="one" style="display: none">私密文章</p>
+
+                            <div class="dkuang" style="border: none">
+						<p class="one" style="color:#A10000 ;font-size: 18px">标题：{{ foo.title }}</p>
+						<div class="word clearfix">
+							<ul class="fl clearfix">
+
+								<li>{{ foo.tag }}</li>
+								<li>{{ foo.classfy }}</li>
+								<li>{{ foo.source }}</li>
+							</ul>
+							<p class="fr"><span style="margin-right: 5px">
+                                {% if foo.vip %}
+                                    VIP
+                                {% else %}
+                                    非VIP
+                                {% endif %}
+                            </span></p>
+						</div>
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img style="float: left;margin-left: -3px; margin-top: -12px; margin-bottom: -12px;width: 135px;height: 95px" src="/static/media/{{ foo.img }}"/></a>
+
+                            <div style="float: left;margin-left: 75px;width: 400px;height: 65px;">
+                                <ul class="fl clearfix">
+								<li style="color: #757575">创建时间：{{ foo.pub_time }}</li>
+                                    <br>
+								<li style="color: #757575">修改时间：{{ foo.modify_time }}</li>
+
+							</ul>
+                            </div>
+
+                            <form action="show_alter_post/" method="get" id="_form2" >
+                                <input style="display: none" type="text"  name="post_id" rel="{{ foo.id }}" value="{{ foo.id }}" placeholder="{{ foo.id }}">
+                                <p class="fr" >
+                                    <a  href="#" onclick="document.getElementById('_form2').submit();">修改文章</a>
+                                    <a href="#" class="simi" rel="{{ foo.id }}">设为私密</a>
+                                </p>
+                            </form>
+						</div>
+					</div>
+
+					</div>
+                {% endfor %}
+
+                {# vip#}
+                {% for foo in p_vip %}
+                <div class="dkuang" >
+						<p class="one" style="display: none;">VIP</p>
+
+
+                            <div class="dkuang" style="border: none">
+						<p class="one" style="color:#A10000 ;font-size: 18px">标题：{{ foo.title }}</p>
+						<div class="word clearfix">
+							<ul class="fl clearfix">
+
+								<li>{{ foo.tag }}</li>
+								<li>{{ foo.classfy }}</li>
+								<li>{{ foo.source }}</li>
+							</ul>
+							<p class="fr"><span style="margin-right: 5px">
+                                {% if foo.vip %}
+                                    VIP
+                                {% else %}
+                                    非VIP
+                                {% endif %}
+                            </span></p>
+						</div>
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img style="float: left;margin-left: -3px; margin-top: -12px; margin-bottom: -12px;width: 135px;height: 95px" src="/static/media/{{ foo.img }}"/></a>
+
+                            <div style="float: left;margin-left: 75px;width: 400px;height: 65px;">
+                                <ul class="fl clearfix">
+								<li style="color: #757575">创建时间：{{ foo.pub_time }}</li>
+                                    <br>
+								<li style="color: #757575">修改时间：{{ foo.modify_time }}</li>
+
+							</ul>
+                            </div>
+
+                             <form action="show_alter_post/" method="get" id="_form3" >
+                                <input style="display: none" type="text"  name="post_id" rel="{{ foo.id }}" value="{{ foo.id }}" placeholder="{{ foo.id }}">
+                                <p class="fr" >
+                                    <a style="background: #A10000;border: 1px #A10000 solid" href="#" onclick="document.getElementById('_form3').submit();">修改文章</a>
+                                    <a href="#" class="simi" rel="{{ foo.id }}">设为私密</a>
+                                </p>
+                            </form>
+						</div>
+					</div>
+					</div>
+                {% endfor %}
+
+</body>
+</html>

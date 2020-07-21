@@ -1,0 +1,41 @@
+.left_top{
+    float: left;
+    margin: 35px;
+    border: rgb(224,224,224) 1px solid;
+    height: 415px;
+    width: 300px;
+}
+.left_top ul{
+    float: left;
+}
+.left_top ul li{
+    text-decoration: none;
+
+    line-height: 30px;
+    height: 30px;
+    width: 300px;
+    padding: 10px 0px;
+    margin: 0px 0px;
+    font-size: 19px;
+    display:block;
+
+}
+.left_top ul li:hover{
+    color: rgb(178,11,19);
+    background: rgb(253,227,228);
+
+}
+.left_top ul li a{
+    color: rgb(128,128,105);
+
+}
+.left_top ul li a:hover{
+    color: rgb(178,11,19);
+
+}
+.right{
+    float: left;
+    background: burlywood;
+    height: 500px;
+    width: 700px;
+}

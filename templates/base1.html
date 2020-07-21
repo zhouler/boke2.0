@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<link href="/static/css/style.css" type="text/css" rel="stylesheet">
+<link type="text/css" href="/static/css/nprogress.css" rel="stylesheet">
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1648028_hfis4jovb59.css">
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1656979_26u8c1l5g6bj.css">
+
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1675352_ywk4rtbr8od.css">
+
+
+<link rel="apple-touch-icon-precomposed" href="/static/images/icon/icon.png">
+<link rel="shortcut icon" href="/static/images/icon/favicon.ico">
+<meta name="Keywords" content="" />
+<meta name="description" content="" />
+
+
+    {% block head %}
+    {% endblock head %}
+</head>
+<body>
+<section class="container user-select">
+  <header>
+    <div class="hidden-xs header" ><!--超小屏幕不显示-->
+      <ul class="nav hidden-xs-nav" style="margin-top: 8px;" >
+{#          &emsp;#}
+        <li class="active">
+            {% if username.nickname %}
+                <a href="/login/"><span class="iconfont icon-icon_suo-"></span>欢迎您 ({{ username.nickname|safe|truncatechars_html:5 }})</a>
+
+            {% else %}
+                <a href="/login/"><span class="iconfont icon-icon_suo-"></span>登录 | 注册</a>
+
+            {% endif %}
+        </li>
+        <li class="active"><a href="/mycenter/"><span class="glyphicon glyphicon-user"></span>个人中心</a></li>
+
+        <li class="active"><a href="../../"><span class="glyphicon glyphicon-home"></span>主页</a></li>
+        <li><a href="/vip_post_not/1/"><span class="glyphicon glyphicon-erase"></span>非vip文章</a></li>
+        <li><a href="/vip_post/1/"><span class="glyphicon glyphicon-inbox"></span>vip文章</a></li>
+        <li><a href="/must_see_blog_posts/"><span class="glyphicon glyphicon-globe"></span>入站必看文章</a></li>
+        <li><a href="/message_board/1/"><span class="glyphicon glyphicon-tags"></span>留言板</a></li>
+      </ul>
+      <div class="feeds"> <a class="feed feed-xlweibo" href="" ><i></i>新浪微博</a> <a class="feed feed-txweibo" href="" ><i></i>腾讯微博</a> <a class="feed feed-rss" href="" ><i></i>订阅本站</a> <a class="feed feed-weixin" data-toggle="popover" data-trigger="hover" title="微信扫一扫" data-html="true" data-content="<img src='/static/images/weixin.jpg' alt=''>" href="javascript:;"><i></i>关注微信</a> </div>
+      <div class="wall" ><a href="#">统计作者：{{ p1 }}</a></div>
+      <div class="wall" ><a href="#" >统计文章：{{ p2 }}</a></div>
+      <div class="wall" ><a href="#" >统计评论：{{ p3 }}</a></div>
+      <div class="wall" ><a href="#">统计留言：{{ p4 }}</a></div>
+        <div class="wall"><a href="/message_board/1" >读者墙</a> | <a href="/tags/" >标签云</a></div>
+    </div>
+    <!--/超小屏幕不显示-->
+
+    <div class="visible-xs header-xs"><!--超小屏幕可见-->
+      <div class="navbar-header header-xs-logo">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-xs-menu" aria-expanded="false" aria-controls="navbar"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
+      </div>
+      <div id="header-xs-menu" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav header-xs-nav">
+          <li class="active"><a href="../"><span class="glyphicon glyphicon-home"></span>网站首页</a></li>
+          <li><a href="/myapp/index/?classfy=1"><span class="glyphicon glyphicon-erase"></span>网站前端</a></li>
+          <li><a href="/myapp/index/?classfy=2"><span class="glyphicon glyphicon-inbox"></span>后端技术</a></li>
+          <li><a href=""><span class="glyphicon glyphicon-globe"></span>管理系统</a></li>
+          <li><a href="about.html"><span class="glyphicon glyphicon-user"></span>关于我们</a></li>
+          <li><a href="friendly.html"><span class="glyphicon glyphicon-tags"></span>友情链接</a></li>
+        </ul>
+        <form class="navbar-form" action="" method="post" style="padding:0 25px;">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="请输入关键字">
+            <span class="input-group-btn">
+            <button class="btn btn-default btn-search" type="submit">搜索</button>
+            </span> </div>
+        </form>
+      </div>
+    </div>
+  </header>
+  <!--/超小屏幕可见-->
+
+  <!--/内容-->
+  <aside class="sidebar visible-lg" style="float: right"><!--右侧>992px显示-->
+
+    <div class="sentence"> <strong>每日一句</strong>
+      <h2>{{s.time|date:"Y年m月d日 D"}}</h2>
+      <p>{{ s.cotent }}</p>
+    </div>
+
+    <div id="search" class="sidebar-block search" role="search">
+      <h2 class="title"><strong>搜索</strong></h2>
+      <form class="navbar-form" action="/sousuo/1" method="post">
+        <div class="input-group">
+          <input type="text" name="sousuo" class="form-control" size="35" placeholder="作者名/标题名">
+          <span class="input-group-btn">
+          <button class="btn btn-default btn-search" type="submit">搜索</button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <div class="sidebar-block recommend">
+      <h2 class="title"><strong>本周最多点赞</strong></h2>
+      <ul>
+        {% for i in post_zan %}
+        <li><a  href="../../../content/{{ i.id }}"> <span class="thumb"><img src="/static/media/{{ i.img }}" alt=""></span>作者：{{ i.author }} <br>标题：{{ i.title }}<span class="text"></span> <span class="text-muted">点赞({{ i.zan }})</span></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+      <div class="sidebar-block recommend" style="margin-top: 18px">
+      <h2 class="title"><strong>本周最多收藏</strong></h2>
+      <ul>
+        {% for i in post_fav %}
+        <li><a  href="../../../content/{{ i.id }}"> <span class="thumb"><img src="/static/media/{{ i.img }}" alt=""></span>作者：{{ i.author }} <br>标题：{{ i.title }}<span class="text"></span> <span class="text-muted">收藏({{ i.number_of_favorites }})</span></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="sidebar-block comment">
+      <h2 class="title"><strong>本周最新评论</strong></h2>
+      <ul>
+          {% for i in c %}
+            <li data-toggle="tooltip" data-placement="top" title="{{ i.name }}"><a  href="../../../content/{{ i.post_id }}"><span class="face"><img style="width: 60px;height: 60px;margin-left: -13px;margin-top: -10px" src="/static/images/icon/1%20({{ i.rand}}).png" alt=""></span> <span class="text"><strong>{{ i.username }}</strong> ({{ i.time }}) <br>文章：{{ i.post }}<br />
+          评论内容：{{ i.content|safe|truncatechars:23 }}</span></a></li>
+          {% endfor %}
+      </ul>
+    </div>
+
+  </aside>
+
+    {% block body %}
+
+    {% endblock body %}
+  <!--/右侧>992px显示-->
+    <footer class="footer" ><a href="../../../../../login" style="margin-left:130px "></a>  <a href="../../../../../register"></a><a href="#"></a> <span></span>  </footer>
+
+</section>
+<div><a href="javascript:;" class="gotop" style="display:none;"></a></div>
+<!--/返回顶部-->
+<script src="/static/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+<script src="/static/js/nprogress.js" type="text/javascript" ></script>
+<script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+//返回顶部按钮
+$(function(){
+	$(window).scroll(function(){
+		if($(window).scrollTop()>100){
+			$(".gotop").fadeIn();
+		}
+		else{
+			$(".gotop").hide();
+		}
+	});
+	$(".gotop").click(function(){
+		$('html,body').animate({'scrollTop':0},500);
+	});
+});
+
+//提示插件启用
+$(function () {
+  $('[data-toggle="popover"]').popover();
+});
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip();
+});
+
+//鼠标滑过显示 滑离隐藏
+$(function(){
+	$(".carousel").hover(function(){
+		$(this).find(".carousel-control").show();
+	},function(){
+		$(this).find(".carousel-control").hide();
+	});
+});
+$(function(){
+	$(".hot-content ul li").hover(function(){
+		$(this).find("h3").show();
+	},function(){
+		$(this).find("h3").hide();
+	});
+});
+//页面元素智能定位
+$.fn.smartFloat = function() {
+	var position = function(element) {
+		var top = element.position().top; //当前元素对象element距离浏览器上边缘的距离
+		var pos = element.css("position"); //当前元素距离页面document顶部的距离
+		$(window).scroll(function() { //侦听滚动时
+			var scrolls = $(this).scrollTop();
+			if (scrolls > top) { //如果滚动到页面超出了当前元素element的相对页面顶部的高度
+				if (window.XMLHttpRequest) { //如果不是ie6
+					element.css({ //设置css
+						position: "fixed", //固定定位,即不再跟随滚动
+						top: 0 //距离页面顶部为0
+					}).addClass("shadow"); //加上阴影样式.shadow
+				} else { //如果是ie6
+					element.css({
+						top: scrolls  //与页面顶部距离
+					});
+				}
+			}else {
+				element.css({ //如果当前元素element未滚动到浏览器上边缘，则使用默认样式
+					position: pos,
+					top: top
+				}).removeClass("shadow");//移除阴影样式.shadow
+			}
+		});
+	};
+	return $(this).each(function() {
+		position($(this));
+	});
+};
+
+//启用页面元素智能定位
+$(function(){
+	$("#search").smartFloat();
+});
+
+</script>
+{% block script %}
+{% endblock script %}
+</body>
+</html>

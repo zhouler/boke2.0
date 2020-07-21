@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+
+<title>注册</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/css/register.css">
+<link rel="start icon" href="/static/images/resize_png_new.png"  >
+
+</head>
+
+<style>
+.spnormal1{
+
+    text-align: center;
+    margin-bottom: 13px;
+    margin-top: -43px;
+    margin-left: 400px;
+	font-family: inherit;
+	font-size: 18px;
+	text-indent: 5px;
+	width: 72px;
+	height: 40px;
+	line-height: 20px;
+	border: 1px solid #DFDFDF;
+
+	box-shadow: 1px 1px 5px rgba(223, 223, 223, 0.7);
+
+    }
+
+{#.spnormal1 span{#}
+{#    margin-top: 5px;#}
+{#}#}
+
+
+</style>
+
+<body class="bg-gray">
+<div>
+  <!--top start-->
+  <div class="tp for-register">
+    <div class="tp_box clearfix">
+      <div class="top"> <span class="tp_loginInfo">您好，欢迎来到个人Boke！</span><a href="../../login" class="top-a">[登录]</a> </div>
+    </div>
+  </div>
+  <!--top end-->
+  <!--hd start-->
+  <div class="login-wrap">
+    <div class="w940">
+      <div class="header clearfix">
+        <h1 class="fl"> <a title="折扣社" href="">  <img src="/static/images/湖南科技.png" height="50" width="50"  > </a> </h1>
+        <div class="welcome fl" style="margin-top: -8px">欢迎注册</div>
+      </div>
+    </div>
+  </div>
+  <!--hd end-->
+  <div class="have-reg w940"><span>我已经注册，现在就&nbsp;<a href="/login" class="blue_link">登录</a></span></div>
+  <!-- content start -->
+    <form action="" method="post">
+  <div class="container w940">
+    <div class="register">
+      <div class="spsearch">
+        <p>
+          <label><b class="star">*</b>&nbsp;用户名：</label>
+          <input class="spnormal" type="text" name="username">
+          <span  class="short">4-20位字符，支持英文、数字和符号的组合</span> </p>
+      </div>
+      <div class="spsearch">
+        <p>
+          <label><b class="star">*</b>&nbsp;请设置密码：</label>
+          <input class="spnormal" type="password" name="password1">
+          <span class="long">6-20位字符，支持英文、数字和符号的组合，不建议使用纯数字、纯字母或纯符号</span> </p>
+      </div>
+
+        <div class="spsearch">
+        <p>
+          <label><b class="star">*</b>&nbsp;请确定密码：</label>
+          <input class="spnormal" type="password" name="password2" >
+          <!--<input class="spnormal" type="password" name="password2" >-->
+
+          <span  class="short" >请再次输入密码</span>
+        </p>
+
+        {% ifequal flog 2 %}
+
+        <p class="long" style="margin-left: 270px;margin-top: 5px;color: #ff6700;background:#ffffff">用户已存在</p><br>
+        {% endifequal %}
+
+        {% ifequal flog 1 %}
+        <p style="margin-left: 270px;margin-top: 5px;color: #ff6700;background:#ffffff">俩次密码不一致</p><br>
+        {% endifequal %}
+
+
+
+      </div>
+
+
+
+    <div class="spsearch">
+        <p>
+          <label><b class="star">*</b>&nbsp;请输入邮箱：</label>
+          <input id="email" class="spnormal" type="text" name="email"  style="width: 190px">
+
+
+        </p>
+        <p class="spnormal1" id="btn"><a id="span" style="line-height: 40px">验证码</a></p>
+
+
+
+      </div>
+
+
+
+    <div class="spsearch" style="margin-top: -13px">
+        <p>
+          <label><b class="star">*</b>&nbsp;邮箱验证码：</label>
+          <input class="spnormal" type="text" name="input_email">
+          <span  class="short">填写发到您邮箱的4位数验证码
+
+
+
+          </span> </p>
+      </div>
+
+        {% ifequal flog 3 %}
+        <p style="margin-left: 270px;margin-top: 5px;color: #ff6700;background:#ffffff">验证码校验失败</p><br>
+        {% endifequal %}
+
+
+
+
+
+
+
+
+
+      <div class="spsearch item" style="margin-top: -15px">
+        <p>
+          <label>&nbsp;</label>
+          <input type="submit" value="">
+        </p>
+      </div>
+
+    </div>
+  </div>
+        </form>
+  <!--footer start-->
+  <div class="ft for-register mt10">
+    <div class="ft_box clearfix">
+      <p class="fl"><a href="../../admin/" class="copyRight blue_link">管理员入口</a></p>
+    </div>
+  </div>
+  <!--footer end-->
+</div>
+</body>
+<script type="text/javascript" src="/static/script/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/static/script/js.js"></script>
+
+
+<script>
+   var second=60
+   var flog=1
+   var span=document.getElementById('span');
+   var btn = document.getElementById('btn');
+
+    btn.onclick = function () {
+        if(flog==1)
+        {
+            function star() {
+            t = setInterval(function () {
+            flog=0
+            second = second - 1;
+            span.innerText = second;
+            if (second === 0) {
+                clearInterval(t)
+                span.innerText = '验证码';
+                second=60
+                flog=1
+                }
+
+            }, 1000)
+            }
+            star()
+        }
+    };
+
+//ajax发送email
+$(function(){
+    $(".spnormal1").click(function(){
+
+        var email=document.getElementById('email');
+
+        $.ajax({
+            type:"POST",
+            url:"/get_email",
+            data:"email="+email.value,
+
+            success:function(data){
+            }
+        });
+        return false;
+    });
+})
+</script>
+
+</html>

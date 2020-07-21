@@ -1,0 +1,110 @@
+{% extends "base1.html" %}
+{% block head %}
+    <title>我的评论和留言</title>
+{% endblock head %}
+
+{% block body %}
+  <!--/超小屏幕可见-->
+  <div class="content-wrap"><!--内容-->
+    <div class="content">
+      <div class="content-block">
+
+
+      </div>
+
+      <div class="content-block comment">
+
+
+        <form action="" method="post" class="form-inline" id="comment-form">
+          <div class="comment-title">
+
+
+          </div>
+          <div class="comment-form">
+            <textarea placeholder="" name="commentContent" class="pinglun1" id="content"></textarea>
+            <div class="comment-form-footer">
+              <div class="comment-form-text">请先 <a href="../login/">登录</a> 或 <a href="../register/">注册</a> </div>
+              <div class="comment-form-btn">
+                <button type="submit" class="btn btn-default btn-comment" id="tijiao">提交评论</button>
+              </div>
+
+
+            </div>
+
+          </div>
+            <br>
+            <h2 class="title"><strong>最新留言</strong></h2>
+
+        </form>
+
+          <div class="comment-content" style="margin-left: 0px">
+
+              {% for d in page %}
+                        <ul>
+                      <li data-toggle="tooltip" data-placement="top" title=""><span class="face"><img style="width: 60px;height: 60px;margin-left: -11px;margin-top: -12px" src="/static/images/icon/1%20({{ d.rand }}).png" alt=""></span> <span class="text"><strong style="color: #3399CC">{{ d.username }}</strong> ({{ d.time }}) 留言：<br />
+                      {{ d.conten }}</span></li>
+                      </ul>
+                {% endfor %}
+
+
+
+        </div>
+
+      <div class="quotes" style=" margin-bottom:-4px;margin-top: 7px">
+        <nobr>
+
+            {% if page.has_previous %}
+                <a href="../{{ page.previous_page_number }}">上一页</a>
+            {% else %}
+                <span class="disabled">上一页</span>
+            {% endif %}
+
+
+            {% for page_number in page.paginator.page_range %}
+                {# 获取当前页的页码 #}
+                {% if page_number == page.number %}
+                    {# 如果是当前页的话，选中 current#}
+                        <span  class="current" href="">{{page_number}}</span>
+                {% else %}
+                        <a   href="../{{page_number}}">{{page_number}}</a>
+                {% endif %}
+            {% endfor %}
+
+
+
+            {% if page.has_next %}
+                <a href="../{{ page.next_page_number }}">下一页</a>
+            {% else %}
+                <span class="disabled">下一页</span>
+            {% endif %}
+
+        </nobr>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+<script >
+
+		var tijiao = document.getElementById("tijiao")
+		tijiao.onclick = function () {
+
+		    $('#comment-form').submit(function (event) {
+                if((content.value).length==0){
+                    alert("内容不能为空")
+                    event.preventDefault();
+                    return false;
+                }else{
+                    return true;
+                }
+            });
+
+
+        }
+
+
+     </script>
+{% endblock body %}

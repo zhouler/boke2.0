@@ -1,0 +1,296 @@
+<!doctype html>
+<html >
+
+<head>
+
+
+         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>他的主页</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/mygxin.css" />
+
+        <link rel="stylesheet" type="text/css" href="/static/font_Icon/iconfont.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/chat.css">
+
+
+
+
+</head>
+    <style>
+
+
+@media only screen and (max-width: 767px) {
+.sixin .ab{
+
+    border: #b0b0b0 1px solid;
+    font-size: 15px;
+    float: right;
+    margin-top: -25px;}
+
+       .Bott .you {
+       margin-left: 0px;
+
+	    width: 340px;
+        padding-right: 0px;
+           margin-right: -110px;
+    }
+.footer {
+	min-width: 340px;
+}
+
+
+}
+@media only screen and (min-width: 1199px) {
+       .Bott .you {
+       margin-left: 110px;
+
+    }
+
+
+}
+
+
+
+.sixin .aa{
+
+            border: #b0b0b0 1px solid;
+            font-size: 15px;
+            color: #A10000;
+            margin-left: 15px;
+            padding: 0 9px;
+            display: inline-block;
+            border-radius: 4px;
+                height: 23px;
+    line-height: 23px;
+        }
+
+.sixin .ab{
+
+    border: #b0b0b0 1px solid;
+    font-size: 15px;
+    float: right;
+
+    margin-right: -10px;
+    padding: 0 9px;
+    border-radius: 4px;
+    height: 23px;
+    line-height: 23px;
+        }
+
+
+
+    </style>
+
+
+
+	<body>
+
+
+
+
+
+
+		<!------------------------------head------------------------------>
+
+		<!------------------------------idea------------------------------>
+		<div class="address mt" id="add" >
+			<div class="wrapper clearfix" style="margin-top: -80px">
+				<a href="../../" class="fl">返回</a>
+				<span>/</span>
+				<a href="#" class="on">他的主页</a>
+			</div>
+		</div>
+
+
+		<!------------------------------Bott------------------------------>
+		<div class="Bott" >
+			<div class="wrapper clearfix" >
+
+				<div class="you fl"  >
+					<div class="tx clearfix">
+						<div class="fl clearfix">
+                        {% if uer_obj.avatar %}
+                            <a  href="/static/media/{{ uer_obj.avatar }} " class="fl"><img style="margin-left: -3px;margin-top: -3px;height: 92px;width: 92px;border-radius: 50%;border:2px solid #b0b0b0;" src="/static/media/{{ uer_obj.avatar }}"/></a>
+
+                        {% else %}
+                            <a href="/static/media/1.jpg" class="fl"><img style="height: 92px;width: 92px;margin-left: -3px;margin-top: -3px;border-radius: 50%;border:2px solid #b0b0b0;" src="/static/media/1.jpg"/></a>
+
+                        {% endif %}							<p class="fl"><span>{{ uer_obj.nickname }}（{{ uer_obj.days_online }}天）
+
+                            {% ifequal uer_obj.sex "女" %}
+                                    <img style="margin-left: 1px; margin-bottom: -4px;width: 20px;height: 20px" src="/static/media/女.png" alt="">
+
+                            {% else %}
+                                    <img style="margin-left: 1px; margin-bottom: -4px;width: 20px;height: 20px" src="/static/media/男.png" alt="">
+                            {% endifequal %}
+
+                              <div class="sixin">
+
+                                  <a class="aa" id="guanzhu"  rel="{{ uer_obj.id }}" href="" >关注</a>
+                                    &nbsp;
+                                    &nbsp;
+
+                                  <a class="ab" id="sixin" rel="{{ uer_obj.id }}" href="" >私信</a>
+
+                              </div>
+
+
+
+
+
+
+                        </span></p>
+						</div >
+
+                       <div >
+                           <br>
+                           <br>
+
+                            <div class="f1" style="float:right;color:#757575;margin: 0 0 "  >{{ uer_obj.username }} :账号</div>
+                        <br>
+                        <div class="f1" style="float:right;color:#757575;  margin: 0 0 "  > {{ uer_obj.city }} :城市</div>
+
+                       </div>
+					</div>
+					<div class="bott" >
+						<div class="clearfix">
+							<a href="#" class="fl"><img style="width: 100px;height: 100px" src="/static/img/文章11.png"/></a>
+							<p class="fl"><span>他的文章：<strong>{{ uer_post }}</strong></span>
+								<a href="../her_post/{{ uer_obj.id }}/">查看详情></a>
+							</p>
+						</div>
+						<div class="clearfix">
+							<a href="#" class="fl"><img style="width: 100px;height: 100px" src="/static/img/评论11.png"/></a>
+							<p class="fl"><span>评论留言：<strong>{{ user_momment }}</strong> | <strong>{{ user_message }}</strong></span>
+								<a href="../her_comment/{{ uer_obj.id }}/">查看详情></a>
+							</p>
+						</div>
+						<div class="clearfix">
+							<a href="#" class="fl"><img style="width: 100px;height: 100px" src="/static/img/粉丝.png"/></a>
+							<p class="fl"><span>他的粉丝：<strong>{{ user_follower }}</strong></span>
+								<a href="../her_fensi/{{ uer_obj.id }}/">查看详情></a>
+							</p>
+						</div>
+						<div class="clearfix">
+							<a href="#" class="fl"><img style="width: 100px;height: 100px" src="/static/img/喜欢.png"/></a>
+							<p class="fl"><span>他的关注：<strong>{{ user_followed }}</strong></span>
+								<a href="../her_guanzhu/{{ uer_obj.id }}/">查看详情></a>
+							</p>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<!--返回顶部-->
+		<div class="gotop">
+
+
+
+
+			<p>400-800-8200</p>
+		</div>
+		<div class="footer">
+			<div class="top">
+				<div class="wrapper">
+
+
+
+
+				</div>
+			</div>
+			<p class="dibu">最家家居&copy;2013-2017公司版权所有 京ICP备080100-44备0000111000号<br />
+			违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
+		</div>
+		<script src="/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/user.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+
+
+
+        </script>
+
+    <script >
+
+        $("#sixin").click(function(){
+            alert("关注了对方，就可以在我的中心私信了哦")
+
+        });
+
+            //ajax更新关注
+    $(function(){
+        $("#guanzhu").click(function(){
+            var zambia = $(this);
+            var id = zambia.attr("rel"); //对应id
+
+            $.ajax({
+                type:"POST",
+                url:"/guanzhu2",
+                data:"id="+id,
+
+                cache:false, //不缓存此页面
+                success:function(data){
+
+                        zambia.html(data);
+
+
+
+                }
+            });
+            return false;
+        });
+    })
+
+            var box = document.getElementById("box")
+            // 点击出现弹窗
+            var show = document.getElementById("show")
+            show.onclick = function() {
+                // 删除类名 .hide  显示弹窗
+
+                box.classList.remove("hide")
+
+            }
+
+            // 点击关闭
+            var cancel = document.getElementById("cancel")
+            cancel.onclick = function () {
+                // 添加类名 .hide 关闭弹窗
+                box.classList.add("hide")
+
+                var yans =document.getElementById('yanse')
+                yans.style.background="rgb(255,255,255)";
+            }
+
+            // 点击确定
+            var save = document.getElementById("save")
+            save.onclick = function () {
+                // 这里执行你的 确定后的操作
+                box.classList.add("hide")
+                var yans =document.getElementById('yanse')
+                yans.style.background="rgb(255,255,255)";
+
+            }
+
+
+        </script>
+
+
+
+
+	</body>
+
+
+
+</html>

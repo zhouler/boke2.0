@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<html>
+	<head lang="en">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>账户信息</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/mygrxx.css" />
+	</head>
+    <style>
+		#box{
+			width:300px;
+			height:210px;
+			background: white;
+			position:absolute;
+			left:56%;
+			top:45%;
+			margin-left: -150px;
+			margin-top: -150px;
+            border: 1px solid #A10000;
+		}
+		button{
+			display: inline-block;
+			width: 90px;
+			height: 36px;
+			line-height: 36px;
+			text-align: center;
+			background: #fff;
+			border: 1px solid #e6e6e6;
+			margin-left: 38px;
+		}
+		/* 隐藏弹窗的类名 */
+		.hide{
+			display: none;
+		}
+		div .b2{
+				margin-top: 60px;
+				background: #A10000;color: #FFFFFF;
+		}
+		#sp{
+			font-family:inherit;
+			margin: auto;
+			margin-left: 78px;
+		}
+
+
+
+	</style>
+	<body>
+
+		<!------------------------------head------------------------------>
+		<div class="address mt" id="add" >
+			<div class="wrapper clearfix" style="margin-top: -80px">
+				<a href="../../" class="fl">首页</a>
+				<span>/</span>
+				<a href="#" class="on">个人信息</a>
+                <div ><a class="del" href="#2" > </a></div>
+			</div>
+		</div>
+
+
+		<!------------------------------idea------------------------------>
+        		<!-- 通过添加和删除 .hide类名  实验弹窗的显示和隐藏 -->
+		<div class="hide" id="box">
+
+			<div style="margin-top: 50px">
+				<span  id="sp">确定要退出登录吗</span>
+			</div>
+
+
+
+			<a href="../quit/"><button id="save" class="b2">确定</button></a>
+			<button id="cancel" class="b1">关闭</button>
+		</div>
+		
+		<!------------------------------Bott------------------------------>
+		<div class="Bott">
+			<div class="wrapper clearfix">
+				<div class="zuo fl">
+					<h3>
+                        {% if uer_obj.avatar %}
+                            <a href="/static/media/{{ uer_obj.avatar }}"><img style="height: 92px;width: 92px;border-radius: 50%;border:2px solid #b0b0b0;" src="/static/media/{{ uer_obj.avatar }}"/></a>
+
+                        {% else %}
+                            <a href="/static/media/1.jpg"><img style="height: 92px;width: 92px;border-radius: 50%;border:2px solid #b0b0b0;" src="/static/media/1.jpg"/></a>
+
+                        {% endif %}
+						<p class="clearfix"><span class="fl">[{{ uer_obj.nickname }}]</span><span class="fr" id="show"> [退出登录]</span></p>
+					</h3>
+					<div>
+						<h4>博文管理</h4>
+						<ul style="margin-top: -6px">
+							<li style="margin-top: -6px " ><a href="../">我的中心</a></li>
+							<li style="margin-top: -6px" ><a href="../post_article/">发布文章</a></li>
+							<li style="margin-top: -6px" ><a href="../post_alter/">修改文章</a></li>
+                            <li style="margin-top: -6px"><a href="../delete_article/">删除文章</a></li>
+						</ul>
+						<h4>账号管理</h4>
+						<ul style="margin-top: -6px">
+							<li style="margin-top: -6px" class="on"><a href="#">账号信息</a></li>
+							<li style="margin-top: -6px"><a href="../change_password/">更改密码</a></li>
+                            <li style="margin-top: -6px"><a href="../logout/">账号注销</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="you fl">
+					<h2>个人信息</h2>
+					<div class="gxin">
+                        {% if uer_obj.avatar %}
+                            <div class="tx"><a href="/static/media/{{ uer_obj.avatar }}"><img style="height: 92px;width: 92px;border-radius: 50%;" src="/static/media/{{ uer_obj.avatar }}"/><p >头像</p></a></div>
+
+                        {% else %}
+                            <div class="tx"><a href="/static/media/1.jpg"><img style="height: 92px;width: 92px;border-radius: 50%;" src="/static/media/1.jpg"/><p >头像</p></a></div>
+
+                        {% endif %}
+						<div class="xx">
+							<h3 class="clearfix"><strong class="fl">基础资料</strong><a href="#" class="fr" id="edit1">编辑</a></h3>
+							<div>昵称：{{ uer_obj.nickname }}</div>
+							<div>账号：{{ uer_obj.username }}</div>
+							<div>生日：{{ uer_obj.birthday }}</div>
+							<div>性别：{{ uer_obj.sex }}</div>
+							<div>建立时间：{{ uer_obj.created_time }}</div>
+							<div>绑定邮箱：{{ uer_obj.email }}</div>
+							<div>所在城市：{{ uer_obj.city }}</div>
+{#							<h3>高级设置</h3>#}
+							<!--<div><span class="fl">银行卡</span><a href="#" class="fr">管理</a></div>-->
+{#							<div><span class="fl">账号地区：中国</span><a href="#" class="fr" id="edit2">修改</a></div>#}
+						</div>
+					</div>			
+				</div>
+			</div>
+		</div>
+		<!--遮罩-->
+		<div class="mask"></div>
+		<!--编辑弹框-->
+		<div class="bj" style="margin-top: -235px">
+			<div class="clearfix"><a href="#" class="fr gb"><img src="/static/img/icon4.png"/></a></div>
+			<h3>编辑基础资料</h3>
+			<form action="" method="post" enctype="multipart/form-data">
+
+				<p><label>昵称：</label><input name="nickname" value="{{ uer_obj.nickname }}" type="text"  /></p>
+				<p><label>生日：</label><input name="birthday" value="{{ uer_obj.birthday }}" type="text"   /></p>
+				<p>
+					<label>性别：</label>
+                            {% ifequal uer_obj.sex "男" %}
+                            <span><input name="sex" checked value="男" type="radio"  />男</span>
+					        <span><input name="sex" value="女" type="radio"   />女</span>
+
+                        {% else %}
+                            <span><input name="sex" value="男" type="radio"  />男</span>
+					        <span><input name="sex" checked value="女" type="radio"   />女</span>
+                        {% endifequal %}
+
+
+
+				</p>
+                <p><label>邮箱：</label><input name="email" value="{{ uer_obj.email }}" type="email"   /></p>
+                <p><label>城市：</label><input name="city" value="{{ uer_obj.city }}" type="text"   /></p>
+                <br>
+                <span>
+                 当前图片<a href="/static/media/{{ uer_obj.avatar }}"><img src="" alt="">{{ uer_obj.avatar }}</a>
+                </span>
+
+                <p><label >头像：</label><input style="color: transparent;"  type="file"  name="file"/></p>
+				<div class="bc">
+					<input type="submit" value="保存"  />
+					<input type="button" value="取消" />
+				</div>
+			</form>
+		</div>
+		<!--高级设置修改-->
+		<div class="xg">
+			<div class="clearfix"><a href="#" class="fr gb"><img src="/static/img/icon4.png"/></a></div>
+			<h3>切换账号地区</h3>
+			<form action="#" method="get">
+				<p><label>姓名：</label><input type="text"  value="" /></p>
+				<div class="bc">
+					<input type="button" value="保存" />
+					<input type="button" value="取消" />
+				</div>
+			</form>
+		</div>
+		<!--修改头像-->
+		<div class="avatar">
+			<div class="clearfix"><a href="#" class="fr gb"><img src="/static/img/icon4.png"/></a></div>
+			<h3>修改头像</h3>
+			<form action="#" method="get" >
+				<h4>请上传图片</h4>
+				<input type="file"  />
+				<p>jpg或png，大小不超过2M</p>
+				<input type="submit" value="提交" />
+			</form>
+		</div>
+		
+
+
+		</div>
+		<!--footer-->
+		<div class="footer">
+			<div class="top">
+
+			</div>
+			<p class="dibu">个人博客&copy;2019-2020<br />
+			本网站所列数据，除特殊说明，所有数据均出自个人测试</p>
+		</div>
+		<script src="/static/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/user.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+    </body>
+ <script >
+		var box = document.getElementById("box")
+		// 点击出现弹窗
+		var show = document.getElementById("show")
+		show.onclick = function() {
+			// 删除类名 .hide  显示弹窗
+			box.classList.remove("hide")
+
+		}
+
+		// 点击关闭
+		var cancel = document.getElementById("cancel")
+		cancel.onclick = function () {
+			// 添加类名 .hide 关闭弹窗
+			box.classList.add("hide")
+
+			var yans =document.getElementById('yanse')
+			yans.style.background="rgb(255,255,255)";
+		}
+
+		// 点击确定
+		var save = document.getElementById("save")
+		save.onclick = function () {
+			// 这里执行你的 确定后的操作
+			box.classList.add("hide")
+			var yans =document.getElementById('yanse')
+			yans.style.background="rgb(255,255,255)";
+
+		}
+	</script>
+</html>

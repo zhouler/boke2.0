@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<html>
+	<head lang="en">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>修改文章</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/mygxin.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/myorder.css" />
+
+        <link rel="stylesheet" type="text/css" href="/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css">
+        <script type="text/javascript" src="/static/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+        <script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" src="/static/ueditor/ueditor.all.min.js"></script>
+        <script type="text/javascript" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+
+    </head>
+    <style>
+		#box{
+            z-index:9999;
+			width:300px;
+			height:210px;
+			background: white;
+			position:absolute;
+			left:56%;
+			top:300px;
+			margin-left: -150px;
+			margin-top: -150px;
+            border: 1px solid #A10000;
+		}
+		button{
+			display: inline-block;
+			width: 90px;
+			height: 36px;
+			line-height: 36px;
+			text-align: center;
+			background: #fff;
+			border: 1px solid #e6e6e6;
+			margin-left: 38px;
+		}
+		/* 隐藏弹窗的类名 */
+		.hide{
+			display: none;
+		}
+		div .b2{
+				margin-top: 60px;
+				background: #A10000;color: #FFFFFF;
+		}
+		#sp{
+			font-family:inherit;
+			margin: auto;
+			margin-left: 78px;
+		}
+
+	</style>
+	<body>
+		<!------------------------------head------------------------------>
+
+		<!------------------------------idea------------------------------>
+		<div class="address mt" id="add" >
+			<div class="wrapper clearfix" style="margin-top: -80px">
+				<a href="../../" class="fl">首页</a>
+				<span>/</span>
+				<a href="#" class="on">个人中心</a>
+			</div>
+		</div>
+		
+		<!-- 通过添加和删除 .hide类名  实验弹窗的显示和隐藏 -->
+		<div class="hide" id="box">
+
+			<div style="margin-top: 50px">
+				<span  id="sp">确定要退出登录吗</span>
+			</div>
+
+
+
+			<a href="../quit/"><button id="save" class="b2">确定</button></a>
+			<button id="cancel" class="b1">关闭</button>
+		</div>
+
+        <div class="Bott">
+			<div class="wrapper clearfix">
+				<div class="zuo fl">
+					<h3>
+                        {% if uer_obj.avatar %}
+                            <a href="/static/media/{{ uer_obj.avatar }}"><img style="height: 92px;width: 92px;border-radius: 50%;border:2px solid #b0b0b0;" src="/static/media/{{ uer_obj.avatar }}"/></a>
+
+                        {% else %}
+                            <a href="/static/media/1.jpg"><img style="height: 92px;width: 92px;border-radius: 50%;border:2px solid #b0b0b0;" src="/static/media/1.jpg"/></a>
+
+                        {% endif %}
+
+
+                        <p class="clearfix"><span class="fl">[{{ uer_obj.nickname }}]</span><span class="fr" id="show">[退出登录]</span></p>
+					</h3>
+					<div>
+						<h4>博文管理</h4>
+						<ul style="margin-top: -6px">
+							<li style="margin-top: -6px " ><a href="../">我的中心</a></li>
+							<li style="margin-top: -6px" ><a href="../post_article/">发布文章</a></li>
+							<li style="margin-top: -6px" class="on"><a href="#">修改文章</a></li>
+                            <li style="margin-top: -6px"><a href="../delete_article/">删除文章</a></li>
+						</ul>
+						<h4>账号管理</h4>
+						<ul style="margin-top: -6px">
+							<li style="margin-top: -6px"><a href="../account_information/">账号信息</a></li>
+							<li style="margin-top: -6px"><a href="../change_password/">更改密码</a></li>
+                            <li style="margin-top: -6px"><a href="../logout/">账号注销</a></li>
+						</ul>
+					</div>
+				</div>
+
+
+				<div class="you fl">
+					<h2>修改文章</h2>
+
+                					<div class="dlist clearfix">
+						<ul class="fl clearfix" id="wa">
+							<li class="on"><a href="#" id="quanbu">全部文章({{ p_quanbu|length }})</a></li>
+							<li><a href="#" id="gongkai">公开({{ p_gongkai|length }})</a></li>
+							<li><a href="#" id="simi">私密({{ p_private|length }})</a></li>
+							<li><a href="#" id="huishou">回收站({{ p_false_delete|length }})</a></li>
+
+						</ul>
+						<form action="#" method="get" class="fr clearfix">
+							<input type="text" name="" id="" value="" placeholder="请输入文章标题" />
+							<input type="button" name="" id="" value="" style="background: url(/static/img/ds.png) no-repeat center center;" />
+						</form>
+					</div>
+
+                {# 全部文章#}
+                {% for foo in p_quanbu %}
+                <div class="d1 dkuang" id="{{ foo.id }}" name="z1"  >
+						<p class="one fl" style="display: none">全部文章</p>
+						<div  class="clearfix">
+							<div class="fl vewwl">
+								<a href="#"  style="float: left;margin-left: 28px;margin-bottom: 15px;margin-top: 20px; color:#A10000 ;font-size: 18px">标题：{{ foo.title }}</a>
+
+
+							</div>
+						</div>
+						<div class="word clearfix">
+							<ul class="fl clearfix">
+								<li>{{ foo.tag }}</li>
+								<li>{{ foo.classfy }}</li>
+								<li>{{ foo.source }}</li>
+							</ul>
+							<p class="fr"><span style="margin-right: 5px">
+                                {% if foo.vip %}
+                                    VIP
+                                {% else %}
+                                    非VIP
+                                {% endif %}
+                            </span></p>
+
+						</div>
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img style="float: left;margin-left: -3px; margin-top: -12px; margin-bottom: -12px;width: 135px;height: 95px" src="/static/media/{{ foo.img }}"/></a>
+
+                            <div style="float: left;margin-left: 75px;width: 400px;height: 65px;">
+                                <ul class="fl clearfix">
+								<li style="color: #757575">创建时间：{{ foo.pub_time }}</li>
+                                    <br>
+								<li style="color: #757575">修改时间：{{ foo.modify_time }}</li>
+
+							</ul>
+                            </div>
+
+                            <form action="show_alter_post/" method="get" id="_form_{{ foo.id }}" >
+                                <input type="text" style="display: none" name="post_id" rel="{{ foo.id }}" value="{{ foo.id }}" placeholder="{{ foo.id }}">
+                                <p class="fr" >
+                                    <a  href="#" onclick="document.getElementById('_form_{{ foo.id }}').submit();">修改文章</a>
+                                    <a href="#" class="simi1" rel="{{ foo.id }}">设为私密</a>
+                                </p>
+                            </form>
+						</div>
+					</div>
+                {% endfor %}
+
+
+                {# 公开#}
+                {% for foo in p_gongkai %}
+                <div class="d2 dkuang" id="{{ foo.id }}" name="z2" style="display: none">
+						<p class="one fl" style="display: none">公开</p>
+						<div  class="clearfix">
+							<div class="fl vewwl">
+								<a href="#"  style="float: left;margin-left: 28px;margin-bottom: 15px;margin-top: 20px; color:#A10000 ;font-size: 18px">标题：{{ foo.title }}</a>
+
+
+							</div>
+						</div>
+						<div class="word clearfix">
+							<ul class="fl clearfix">
+								<li>{{ foo.tag }}</li>
+								<li>{{ foo.classfy }}</li>
+								<li>{{ foo.source }}</li>
+							</ul>
+							<p class="fr"><span style="margin-right: 5px">
+                                {% if foo.vip %}
+                                    VIP
+                                {% else %}
+                                    非VIP
+                                {% endif %}
+                            </span></p>
+
+						</div>
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img style="float: left;margin-left: -3px; margin-top: -12px; margin-bottom: -12px;width: 135px;height: 95px" src="/static/media/{{ foo.img }}"/></a>
+
+                            <div style="float: left;margin-left: 75px;width: 400px;height: 65px;">
+                                <ul class="fl clearfix">
+								<li style="color: #757575">创建时间：{{ foo.pub_time }}</li>
+                                    <br>
+								<li style="color: #757575">修改时间：{{ foo.modify_time }}</li>
+
+							</ul>
+                            </div>
+
+                            <form action="show_alter_post/" method="get" id="_form_{{ foo.id }}_" >
+                                <input type="text" style="display: none" name="post_id" rel="{{ foo.id }}" value="{{ foo.id }}" placeholder="{{ foo.id }}">
+                                <p class="fr" >
+                                    <a  href="#" onclick="document.getElementById('_form_{{ foo.id }}_').submit();">修改文章</a>
+                                    <a href="#" class="simi1" rel="{{ foo.id }}">设为私密</a>
+                                </p>
+                            </form>
+						</div>
+					</div>
+                {% endfor %}
+
+                {#私密文章#}
+                {% for foo in p_private %}
+                <div class="d3 dkuang" id="{{ foo.id }}" name="z3" style="display: none">
+						<p class="one fl" style="display: none">私密</p>
+						<div  class="clearfix">
+							<div class="fl vewwl">
+                                <a href="#"  style="float: left;margin-left: 28px;margin-bottom: 15px;margin-top: 20px; color:#A10000 ;font-size: 18px">标题：{{ foo.title }}</a>
+
+							</div>
+						</div>
+						<div class="word clearfix">
+							<ul class="fl clearfix">
+								<li>{{ foo.tag }}</li>
+								<li>{{ foo.classfy }}</li>
+								<li>{{ foo.source }}</li>
+							</ul>
+							<p class="fr"><span style="margin-right: 5px">
+                                {% if foo.vip %}
+                                    VIP
+                                {% else %}
+                                    非VIP
+                                {% endif %}
+                            </span></p>
+						</div>
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img style="float: left;margin-left: -3px; margin-top: -12px; margin-bottom: -12px;width: 135px;height: 95px" src="/static/media/{{ foo.img }}"/></a>
+
+                            <div style="float: left;margin-left: 75px;width: 400px;height: 65px;">
+                                <ul class="fl clearfix">
+								<li style="color: #757575">创建时间：{{ foo.pub_time }}</li>
+                                    <br>
+								<li style="color: #757575">修改时间：{{ foo.modify_time }}</li>
+
+							</ul>
+                            </div>
+
+                            <form action="show_alter_post/" method="get" id="_form2_{{ foo.id }}__" >
+                                <input style="display: none" type="text"  name="post_id" rel="{{ foo.id }}" value="{{ foo.id }}" placeholder="{{ foo.id }}">
+                                <p class="fr" >
+                                    <a  href="#" onclick="document.getElementById('_form2_{{ foo.id }}__').submit();">修改文章</a>
+                                    <a href="#" class="simi1" rel="{{ foo.id }}">取消私密</a>
+                                </p>
+                            </form>
+						</div>
+					</div>
+                {% endfor %}
+
+                {# 回收站#}
+                {% for foo in p_false_delete %}
+                <div class="d4 dkuang " id="{{ foo.id }}" name="z4"  style="display: none">
+						<p class="one" style="display: none;">回收站</p>
+
+
+                            <div class="dkuang" style="border: none">
+						<p class="one" style="color:#A10000 ;font-size: 18px">标题：{{ foo.title }}</p>
+						<div class="word clearfix">
+							<ul class="fl clearfix">
+
+								<li>{{ foo.tag }}</li>
+								<li>{{ foo.classfy }}</li>
+								<li>{{ foo.source }}</li>
+							</ul>
+							<p class="fr"><span style="margin-right: 5px">
+                                {% if foo.vip %}
+                                    VIP
+                                {% else %}
+                                    非VIP
+                                {% endif %}
+                            </span></p>
+						</div>
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img style="float: left;margin-left: -3px; margin-top: -12px; margin-bottom: -12px;width: 135px;height: 95px" src="/static/media/{{ foo.img }}"/></a>
+
+                            <div style="float: left;margin-left: 75px;width: 400px;height: 65px;">
+                                <ul class="fl clearfix">
+								<li style="color: #757575">创建时间：{{ foo.pub_time }}</li>
+                                    <br>
+								<li style="color: #757575">修改时间：{{ foo.modify_time }}</li>
+
+							</ul>
+                            </div>
+
+                             <form action="show_alter_post/" method="get" id="_form3" >
+                                <input style="display: none" type="text"  name="post_id" rel="{{ foo.id }}" value="{{ foo.id }}" placeholder="{{ foo.id }}">
+                                <p class="fr" >
+                                    <a  href="#" class="delete11" rel="{{ foo.id }}" >彻底删除</a>
+                                    <a href="#" class="delete22" rel="{{ foo.id }}" >恢复博文</a>
+                                </p>
+                            </form>
+						</div>
+					</div>
+					</div>
+                {% endfor %}
+
+
+
+
+
+                <div class="fenye clearfix">
+						<a href="#"><img src="/static/img/zuo.jpg"/></a>
+						<a href="#">1</a>
+						<a href="#"><img src="/static/img/you.jpg"/></a>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+		<!--编辑弹框-->
+		<!--遮罩-->
+		<div class="mask"></div>
+		<div class="adddz" style="width: 700px;top: 150px">
+			<form action="" method="post" enctype="multipart/form-data">
+				<input type="text" placeholder="标题" class="on" name="title" id="title"/>
+				<p >文章标题图片
+                <input type="file" name="file" id="file" style="color: transparent;" >
+
+                </p>
+
+                {#页面富文本编辑器#}
+                <div class="am-form-group" >
+                    <script name="data"  id="edi" type="text/plain" style="width:700px;height:500px;"></script>
+                    </script>
+                </div>
+
+                <div class="city" style="margin-top: 13px">
+                    <span style="float: left ;margin-top: 13px" >标签：</span>
+                    <select  multiple="multiple" id="tags" name="tags" >
+
+                        {% for foo in tag %}
+                        <option  value="{{ foo }}">{{ foo }}</option>
+                        {% endfor %}
+
+					</select>
+
+                    <input type="text" id="t"  name="t" value="" style="display: none">
+
+                    <br>
+
+                        类型 :
+                        <select name="classification" >
+						<option value="网站前端">网站前端</option>
+						<option value="后端技术">后端技术</option>
+						<option value="其他">其他</option>
+					    </select>
+
+
+				</div>
+
+                <span style="float: left;margin-top: 10px;">来源：</span><input  name="source" style="margin-left:35px;margin-top: 0px;width: 138px" type="text" placeholder="" />
+                设置为非vip文章<input name="vip" type="radio" style="width:20px;height:20px" value="0" >
+                设置为vip文章<input name="vip" type="radio" style="width:20px;height:20px" value="1" >
+
+
+                <div class="bc">
+					<input type="submit" id="b1" value="发布"  />
+					<input type="button" value="取消" />
+				</div>
+			</form>
+		</div>
+
+		<!--返回顶部-->
+		<div class="gotop">
+
+
+		</div>
+
+
+		<!--footer-->
+		<div class="footer">
+			<div class="top">
+
+			</div>
+			<p class="dibu">个人博客&copy;2019-2020<br />
+			本网站所列数据，除特殊说明，所有数据均出自个人测试</p>
+		</div>
+
+        {# 用于页面的富文本#}
+        <script type="text/javascript">
+             var ue = UE.getEditor('edi');
+
+             SyntaxHighlighter.all();
+
+
+
+        </script>
+<script src="/static/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+<script src="/static/js/nprogress.js" type="text/javascript" ></script>
+<script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+
+
+		var gongkai = document.getElementById("gongkai")
+		var quanbu = document.getElementById("quanbu")
+		var simi = document.getElementById("simi")
+		var huishou = document.getElementById("huishou")
+
+
+
+		var z1 = document.getElementsByName("z1")
+		var z2 = document.getElementsByName("z2")
+		var z3 = document.getElementsByName("z3")
+		var z4 = document.getElementsByName("z4")
+
+
+        quanbu.onclick = function() {
+            quanbu.style.color="#A10000";
+		    simi.style.color="#8c8c8c";
+		    huishou.style.color="#8c8c8c";
+		    gongkai.style.color="#8c8c8c";
+
+		    for(var i=0;i<z1.length;i++){
+            z1[i].style.display="inherit";
+            }
+            for(var i=0;i<z2.length;i++){
+            z2[i].style.display="none";
+            }
+            for(var i=0;i<z3.length;i++){
+            z3[i].style.display="none";
+            }
+            for(var i=0;i<z4.length;i++){
+            z4[i].style.display="none";
+            }
+
+		}
+
+		gongkai.onclick = function() {
+		    quanbu.style.color="#8c8c8c";
+		    simi.style.color="#8c8c8c";
+		    huishou.style.color="#8c8c8c";
+		    gongkai.style.color="#A10000";
+
+
+            for(var i=0;i<z1.length;i++){
+            z1[i].style.display="none";
+            }
+            for(var i=0;i<z2.length;i++){
+            z2[i].style.display="inherit";
+            }
+            for(var i=0;i<z3.length;i++){
+            z3[i].style.display="none";
+            }
+            for(var i=0;i<z4.length;i++){
+            z4[i].style.display="none";
+            }
+
+
+
+
+		}
+        simi.onclick = function() {
+            quanbu.style.color="#8c8c8c";
+		    simi.style.color="#A10000";
+		    huishou.style.color="#8c8c8c";
+		    gongkai.style.color="#8c8c8c";
+		    for(var i=0;i<z1.length;i++){
+            z1[i].style.display="none";
+            }
+            for(var i=0;i<z2.length;i++){
+            z2[i].style.display="none";
+            }
+            for(var i=0;i<z3.length;i++){
+            z3[i].style.display="inherit";
+            }
+            for(var i=0;i<z4.length;i++){
+            z4[i].style.display="none";
+            }
+
+		}
+        huishou.onclick = function() {
+            quanbu.style.color="#8c8c8c";
+		    simi.style.color="#8c8c8c";
+		    huishou.style.color="#A10000";
+		    gongkai.style.color="#8c8c8c";
+
+		    for(var i=0;i<z1.length;i++){
+            z1[i].style.display="none";
+            }
+            for(var i=0;i<z2.length;i++){
+            z2[i].style.display="none";
+            }
+            for(var i=0;i<z3.length;i++){
+            z3[i].style.display="none";
+            }
+            for(var i=0;i<z4.length;i++){
+            z4[i].style.display="inherit";
+            }
+		}
+
+
+
+
+
+
+		var box = document.getElementById("box")
+		// 点击出现弹窗
+		var show = document.getElementById("show")
+		show.onclick = function() {
+			// 删除类名 .hide  显示弹窗
+			box.classList.remove("hide")
+		}
+
+		// 点击关闭
+		var cancel = document.getElementById("cancel")
+		cancel.onclick = function () {
+			// 添加类名 .hide 关闭弹窗
+			box.classList.add("hide")
+
+			var yans =document.getElementById('yanse')
+			yans.style.background="rgb(255,255,255)";
+		}
+
+		// 点击确定
+		var save = document.getElementById("save")
+		save.onclick = function () {
+			// 这里执行你的 确定后的操作
+			box.classList.add("hide")
+			var yans =document.getElementById('yanse')
+			yans.style.background="rgb(255,255,255)";
+
+		}
+{#设置私密文章#}
+$(function(){
+    $(".simi1").click(function(){
+
+        var zambia1 = $(this);
+
+        var id = zambia1.attr("rel"); //对应id
+        $.ajax({
+            type:"POST",
+            url:"/simi_post",
+            data:"id="+id,
+
+            cache:false, //不缓存此页面
+            success:function(data){
+                window.location.reload()
+
+                if (data==1){
+
+                    alert("设置私密文章OK")
+                }
+                else {
+
+                    alert("取消私密文章OK")
+                }
+            }
+        });
+        return false;
+    });
+})
+
+
+{#彻底删除#}
+$(function(){
+    $(".delete11").click(function(){
+
+        var zambia1 = $(this);
+        var id = zambia1.attr("rel"); //对应id
+
+        $.ajax({
+            type:"POST",
+            url:"/remove_completely_post",
+            data:"id="+id,
+
+            cache:false, //不缓存此页面
+            success:function(data){
+                window.location.reload()
+                if (data==1){
+                    alert("彻底删除成功")
+                }
+                else {
+                    alert("彻底删除失败")
+                }
+            }
+        });
+        return false;
+    });
+})
+
+{#恢复文章#}
+$(function(){
+    $(".delete22").click(function(){
+        window.location.reload()
+
+        var zambia1 = $(this);
+        var id = zambia1.attr("rel"); //对应id
+
+        $.ajax({
+            type:"POST",
+            url:"/resume_article",
+            data:"id="+id,
+
+            cache:false, //不缓存此页面
+            success:function(data){
+
+                if (data==1){
+                    alert("恢复成功")
+                }
+                else {
+                    alert("恢复失败")
+                }
+            }
+        });
+        return false;
+    });
+})
+
+	</script>
+    </body>
+
+
+</html>

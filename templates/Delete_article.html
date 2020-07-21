@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<html>
+	<head lang="en">
+		<meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>删除文章</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/proList.css" />
+	</head>
+
+	<body>
+		<!--------------------------------------cart--------------------->
+
+		<div class="cart mt">
+			<!-----------------logo------------------->
+			<!--<div class="logo">
+				<h1 class="wrapper clearfix">
+					<a href="index.html"><img class="fl" src="/static/img/temp/logo.png"></a>
+					<img class="top" src="/static/img/temp/cartTop01.png">
+				</h1>
+			</div>-->
+			<!-----------------site------------------->
+			<div class="site" style="margin-top: -80px">
+				<p class=" wrapper clearfix">
+					<span class="fl"><a href="../">返回</a></span>
+					<a href="index.html" class="fr">继续发布&gt;</a>
+				</p>
+			</div>
+			<!-----------------table------------------->
+
+
+
+		<!-- 通过添加和删除 .hide类名  实验弹窗的显示和隐藏 -->
+
+            <div class="table wrapper">
+
+
+
+
+                <div class="tr">
+					<div >标题</div>
+					<div style="margin-left: -75px">发布时间</div>
+					<div>观看次数</div>
+					<div>点赞</div>
+					<div>被踩</div>
+				</div>
+
+                {% for i in uer_obj %}
+
+				    <div class="th">
+
+					<div class="pro clearfix">
+						<label class="fl">
+							<input type="checkbox" name="post_id" value="{{ i.id }}"/>
+
+    						<span ></span>
+						</label>
+						<a class="fl" href="#">
+							<dl class="clearfix">
+                                <a href="../../content/{{ i.id }}">
+                                    <dt class="fl"><img src="/static/media/{{ i.img }}" style="height: 120px;width: 120px"></dt>
+                                </a>
+								<dd class="fl">
+                                    <a href="../../../content/{{ i.id }}"><p>{{ i.title }}</p></a>
+									<p>标签：{{ i.tag }}:</p>
+									<p>类型：{{ i.classfy }}</p>
+								</dd>
+							</dl>
+						</a>
+					</div>
+					<div class="price">{{ i.pub_time }}</div>
+					<div class="number">
+						<p class="num clearfix">
+{#							<img class="fl sub" src="/static/img/temp/sub.jpg">#}
+							<span class="fl">{{ i.look }}</span>
+{#							<img class="fl add" src="/static/img/temp/add.jpg">#}
+						</p>
+					</div>
+					<div class="price sAll">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ i.zan }}</div>
+					<div class="price"  >
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;
+                        {{ i.cai }}
+
+
+                    </div>
+				</div>
+
+                {% empty %}
+                    <div class="goOn" style="display: inline;margin-left: 520px">空空如也~<a href="../post_article">去发布</a></div>
+
+
+                {% endfor %}
+
+
+
+				<div class="goOn">空空如也~<a href="../post_article">去发布</a></div>
+
+                <div class="tr clearfix">
+					<label class="fl">
+						<input class="checkAll" type="checkbox"/>
+						<span></span>
+					</label>
+					<p class="fl">
+						<a href="#">全选</a>
+						<a href="#" class="del" style="margin-left:500px">删除</a>
+					</p>
+					<p class="fr" style="display: none">
+						<span>共<small id="sl">{{ len }}</small>篇文章</span>
+{#						<span>合计:&nbsp;<small id="all">￥0.00</small></span>#}
+						<a href="order.html" class="count">删除</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="mask"></div>
+
+		<div class="tipDel">
+
+			<p >确定要删除该文章吗？选择是该文章会被放入回收站，您可以恢复文章，也可以选择彻底删除！</p>
+			<p class="clearfix" style="margin-top: -35px">
+				<a class="fl cer" id="queding" href="#" >确定</a>
+				<a class="fr cancel" href="#">取消</a>
+			</p>
+		</div>
+		<!--返回顶部-->
+
+		<!--footer-->
+		<div class="footer">
+			<div class="top">
+
+			</div>
+			<p class="dibu">个人博客&copy;2019-2020<br />
+			本网站所列数据，除特殊说明，所有数据均出自个人测试</p>
+		</div>
+		<!----------------mask------------------->
+		<div class="mask"></div>
+		<!-------------------mask内容------------------->
+
+		<div class="pleaseC">
+			<p>请选择文章文章</p>
+			<img class="off" src="/static/img/temp/off.jpg" />
+		</div>
+		<script src="/static/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/pro.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/cart.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+
+
+//ajax发送email
+$(function(){
+    $("#queding").click(function(){
+
+        var post_id=document.getElementsByName("post_id");
+        var arr=new Array();
+        for (var i=0;i<post_id.length;i=i+1) {
+            if(post_id[i].checked){arr[i]=post_id[i].value;}
+
+        };
+
+        cache:false, //不缓存此页面
+        $.ajax({
+            type:"POST",
+            url:"/delete_article_ajax",
+            data:"arr="+arr,
+
+            success:function(data){
+                alert(data)
+            }
+        });
+        return false;
+    });
+})
+</script>
+
+
+    </body>
+
+
+
+</html>
